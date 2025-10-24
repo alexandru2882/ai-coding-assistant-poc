@@ -1,0 +1,86 @@
+# Google Gemini API Configuration
+
+## API Key Setup
+1. Go to Google AI Studio: https://aistudio.google.com/
+2. Create a new project or select existing one
+3. Generate API key from the API Keys section
+4. Copy the API key (starts with "AIza...")
+
+## Environment Variables
+Add to your .env.local file:
+```
+VITE_GOOGLE_API_KEY=AIza...
+```
+
+## Usage in Code
+```typescript
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+// For chat
+const chat = model.startChat({
+  history: [
+    {
+      role: "user",
+      parts: [{ text: "Hello, I have a question about coding." }],
+    },
+    {
+      role: "model",
+      parts: [{ text: "Great! I'd be happy to help you with coding questions. What would you like to know?" }],
+    },
+  ],
+});
+
+const result = await chat.sendMessage("How do I create a React component?");
+const response = await result.response;
+const text = response.text();
+```
+
+## Model Options
+- `gemini-pro` - General purpose model
+- `gemini-pro-vision` - For image analysis
+- `gemini-1.5-pro` - Latest model with enhanced capabilities
+
+## Rate Limits
+- Free tier: 15 requests per minute
+- Paid tier: Higher limits available
+
+## Integration with LLM Service
+```typescript
+// In src/services/llm-provider.ts
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+class LLMService {
+  private googleAI: GoogleGenerativeAI;
+  
+  constructor() {
+    this.googleAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_API_KEY);
+  }
+  
+  async chatGoogle(model: string, messages: LLMMessage[]): Promise<LLMResponse> {
+    const genModel = this.googleAI.getGenerativeModel({ model });
+    
+    // Convert messages to Gemini format
+    const chat = genModel.startChat({
+      history: messages.slice(0, -1).map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.content }]
+      }))
+    });
+    
+    const result = await chat.sendMessage(messages[messages.length - 1].content);
+    const response = await result.response;
+    
+    return {
+      content: response.text(),
+      usage: {
+        promptTokens: 0, // Gemini doesn't provide detailed token usage
+        completionTokens: 0,
+        totalTokens: 0
+      }
+    };
+  }
+}
+```
