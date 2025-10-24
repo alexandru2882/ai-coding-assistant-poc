@@ -1,73 +1,77 @@
-# React + TypeScript + Vite
+# AI Coding Assistant - POC
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered coding assistant with dual-AI architecture that asks clarifying questions before generating code.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🤖 Dual-AI system (conversational + code generation)
+- 💬 Interactive chat interface
+- 🖥️ Integrated code editor (Monaco)
+- ▶️ Sandboxed code execution
+- 🎨 Dark theme UI
+- 🔧 Multi-language support
 
-## React Compiler
+## Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js v18+
+- pnpm
+- API keys (OpenAI, Anthropic, E2B)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+git clone https://github.com/YOUR_USERNAME/ai-coding-assistant-poc
+cd ai-coding-assistant-poc
+pnpm install
+cp .env.example .env.local
+# Add your API keys to .env.local
+pnpm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+1. Open http://localhost:3000
+2. Describe what you want to build
+3. Answer clarification questions
+4. Review generated code
+5. Run and test code
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+## Development
+
+```bash
+# Start development server
+pnpm run dev
+
+# Build for production
+pnpm run build
+
+# Run linter
+pnpm run lint
+
+# Fix linting issues
+pnpm run lint:fix
+
+# Format code
+pnpm run format
+
+# Check formatting
+pnpm run format:check
 ```
+
+## Project Structure
+
+```
+src/
+├── agents/          # AI agent implementations
+├── components/      # React components
+├── services/        # External service integrations
+├── store/           # State management (Zustand)
+├── types/           # TypeScript type definitions
+└── utils/           # Utility functions
+```
+
+## License
+
+MIT
