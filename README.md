@@ -22,7 +22,7 @@ An AI-powered coding assistant with dual-AI architecture that asks clarifying qu
 ### Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-coding-assistant-poc
+git clone https://github.com/alexandru2882/ai-coding-assistant-poc
 cd ai-coding-assistant-poc
 pnpm install
 cp .env.example .env.local
